@@ -18,7 +18,7 @@ import javax.persistence.Table;
 @Table(name = "Rent", schema = "rest")
 public class Rent implements Serializable {
 
-  private static final long serialVersionUID = -667717010681684391L;
+  private static final long serialVersionUID = 7710980707122221234L;
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO, generator = "rent_id_seq")

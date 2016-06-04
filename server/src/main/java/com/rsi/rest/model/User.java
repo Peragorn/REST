@@ -19,7 +19,7 @@ import javax.persistence.Transient;
 @Table(name = "User", schema = "rest")
 public class User implements Serializable {
 
-  private static final long serialVersionUID = -1873247222613701428L;
+  private static final long serialVersionUID = 9145652009703462898L;
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO, generator = "user_id_seq")

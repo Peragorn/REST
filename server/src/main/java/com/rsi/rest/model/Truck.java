@@ -14,7 +14,7 @@ import javax.persistence.Table;
 @Table(name = "Truck", schema = "rest")
 public class Truck implements Serializable {
 
-  private static final long serialVersionUID = -8684418575642012606L;
+  private static final long serialVersionUID = -5892601389707361232L;
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO, generator = "truck_id_seq")
