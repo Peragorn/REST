@@ -11,8 +11,10 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import com.rsi.rest.business.CarBusiness;
+import com.rsi.rest.business.TruckBusiness;
 import com.rsi.rest.model.Car;
 import com.rsi.rest.model.ResposeList;
+import com.rsi.rest.model.Truck;
 
 @Path("/")
 public class RentWS {
@@ -37,6 +39,20 @@ public class RentWS {
     freeCarList.setCarList(carList);
 
     return freeCarList;
+  }
+
+  @Path("/freeTruck")
+  @GET
+  @Produces(MediaType.APPLICATION_XML)
+  public ResposeList getFreeTruck() {
+    List<Truck> truckList = new ArrayList<Truck>();
+    TruckBusiness tb = new TruckBusiness();
+    truckList = tb.getFreeTrack();
+
+    ResposeList freeTruckList = new ResposeList();
+    freeTruckList.setTruckList(truckList);
+
+    return freeTruckList;
   }
 
 }

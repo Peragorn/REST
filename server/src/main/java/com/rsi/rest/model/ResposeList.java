@@ -11,7 +11,9 @@ public class ResposeList {
   private List<Object> list;
 
   private List<Car> carList;
-  
+
+  private List<Truck> truckList;
+
   public List<Object> getList() {
     return list;
   }
@@ -26,6 +28,14 @@ public class ResposeList {
 
   public void setCarList(List<Car> carList) {
     this.carList = carList;
+  }
+
+  public List<Truck> getTruckList() {
+    return truckList;
+  }
+
+  public void setTruckList(List<Truck> truckList) {
+    this.truckList = truckList;
   }
 
 }
