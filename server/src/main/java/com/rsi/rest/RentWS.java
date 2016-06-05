@@ -10,6 +10,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.json.JSONArray;
+
 import com.rsi.rest.business.CarBusiness;
 import com.rsi.rest.business.TruckBusiness;
 import com.rsi.rest.model.Car;
@@ -55,4 +57,17 @@ public class RentWS {
     return freeTruckList;
   }
 
+  @Path("/freeTruckk")
+  @GET
+  @Produces(MediaType.APPLICATION_JSON)
+  public Response getFreeTruckk() {
+    List<Truck> truckList = new ArrayList<Truck>();
+    TruckBusiness tb = new TruckBusiness();
+    truckList = tb.getFreeTrack();
+
+    JSONArray jsArray = new JSONArray(truckList);
+
+    String result = jsArray.toString();
+    return Response.status(200).entity(result).build();
+  }
 }
