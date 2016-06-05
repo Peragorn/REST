@@ -1,0 +1,157 @@
+<ui:composition
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui">
+    <p:tabView>         
+        <p:tab title="Wypożycz samochód">
+            <h:panelGrid columns="3" cellpadding="10" >
+                <p:graphicImage id="rentCar" value="#{resource['images:rentCar.png']}"  width="300" height="300"/>
+                <h:form id="rentNewCar">
+                    <p:growl id="growlrentNewCar" sticky="false" showDetail="true" life="3000" />
+                    <p:dataTable id="rentCarDataTable" var="carRent" value="#{contentBean.freeCarList}" selectionMode="single" selection="#{contentBean.selectedCarToRent}" rowKey="#{carRent.id}">
+                        <f:facet name="header">
+                            Lista dostępnych samochodów osobowych
+                        </f:facet>
+                        <p:ajax event="rowSelect" listener="#{contentBean.onRowSelect}" update=":#{p:component('growlrentNewCar')}" />
+                        <p:column headerText="Id">
+                            <h:outputText value="#{carRent.id}" />
+                        </p:column>
+                        <p:column headerText="Nazwa">
+                            <h:outputText value="#{carRent.name}" />
+                        </p:column>
+                        <p:column headerText="Numer Rejestracyjny">
+                            <h:outputText value="#{carRent.nameplates}" />
+                        </p:column>
+                        <p:column headerText="Ilość miejsc">
+                            <h:outputText value="#{carRent.spots}" />
+                        </p:column>
+                        <f:facet name="footer">
+                            <p:commandButton process="rentCarDataTable" update=":#{p:component('rentCarDataTable')},:#{p:component('removeRentCarDataTable')}"  value="Wypożycz" actionListener="#{contentBean.rentCar}"/>
+                        </f:facet>
+                    </p:dataTable>
+                </h:form>
+                <h:form id="rentNewTruck">
+                    <p:growl id="growlrentNewTruck" sticky="false" showDetail="true" life="3000" />
+                    <p:dataTable id="rentTruckDataTable" var="truckRent" value="#{contentBean.freeTruckList}" selectionMode="single" selection="#{contentBean.selectedTruckToRent}" rowKey="#{truckRent.id}">
+                        <f:facet name="header">
+                            Lista dostępnych samochodów ciężarowych
+                        </f:facet>
+                        <p:ajax event="rowSelect" listener="#{contentBean.onRowSelectTruck}" update=":#{p:component('growlrentNewTruck')}" />
+                        <p:column headerText="Id">
+                            <h:outputText value="#{truckRent.id}" />
+                        </p:column>
+                        <p:column headerText="Nazwa">
+                            <h:outputText value="#{truckRent.name}" />
+                        </p:column>
+                        <p:column headerText="Numer Rejestracyjny">
+                            <h:outputText value="#{truckRent.nameplates}" />
+                        </p:column>
+                        <p:column headerText="Ładowność">
+                            <h:outputText value="#{truckRent.copacity}" />
+                        </p:column>
+                        <f:facet name="footer">
+                            <p:commandButton process="rentTruckDataTable" update=":#{p:component('rentTruckDataTable')},:#{p:component('removeRentTruckDataTable')}"  value="Wypożycz"  actionListener="#{contentBean.rentTruck}"/>
+                        </f:facet>
+                    </p:dataTable>
+                </h:form>
+            </h:panelGrid>
+        </p:tab>
+        <p:tab title="Dodaj samochód osobowy">
+            <h:panelGrid columns="2" cellpadding="10">
+                <p:graphicImage id="addCar" value="#{resource['images:car.png']}" width="300" height="300"/>
+                <h:form id="addNewCarForm">
+                    <p:growl id="growlAddCar" sticky="false" showDetail="true" life="3000" />
+                    <h:panelGrid columns="2" cellpadding="0" id="addCarPanelGrid">
+                        <h:outputLabel for="carname" value="Nazwa:" />
+                        <p:inputText id="carname"  value="#{contentBean.name}" required="true" label="carname" requiredMessage="Wpraowadź nazwę samochodu"/>
+                        <h:outputLabel for="nameplates" value="Numer rejestracyjny:" />
+                        <p:inputText id="nameplates"  value="#{contentBean.nameplates}" required="true" label="nameplates" requiredMessage="Wpraowadź numer rejestracyjny"/>
+                        <h:outputLabel for="carspots" value="Ilość miejsc" />
+                        <p:inputText id="carspots"  value="#{contentBean.spots}" required="true" label="carspots" requiredMessage="Wpraowadź liczbę miejsc" >
+                            <f:validateDoubleRange minimum="2" />
+                        </p:inputText>
+                        <label></label>
+                        <p:commandButton id="addCarButton" value="Dodaj" actionListener="#{contentBean.addNewCar}" style="margin-top: 25px; float: right" 
+                                         update=":#{p:component('growlAddCar')},:#{p:component('addCarPanelGrid')},:#{p:component('rentCarDataTable')}"/>
+                    </h:panelGrid> 
+                </h:form>    
+            </h:panelGrid>
+        </p:tab>
+        <p:tab title="Dodaj samochód ciężarowy">
+            <h:panelGrid columns="2" cellpadding="10">
+                <p:graphicImage id="addTruck" value="#{resource['images:truck.png']}" width="300" height="300"/>
+                <h:form id="addNewTruckForm">
+                    <p:growl id="growlAddTruck" sticky="false" showDetail="true" life="3000" />
+                    <h:panelGrid columns="2" cellpadding="0" id="addTruckPanelGrid">
+                        <h:outputLabel for="truckname" value="Nazwa:" />
+                        <p:inputText id="truckname"  value="#{contentBean.name}" required="true" label="truckname" requiredMessage="Wpraowadź nazwę samochodu"/>
+                        <h:outputLabel for="trucknameplates" value="Numer rejestracyjny:" />
+                        <p:inputText id="trucknameplates"  value="#{contentBean.nameplates}" required="true" label="trucknameplates" requiredMessage="Wpraowadź numer rejestracyjny"/>
+                        <h:outputLabel for="copacity" value="Ładowność" />
+                        <p:inputText id="copacity"  value="#{contentBean.copacity}" required="true" label="copacity" requiredMessage="Wpraowadź ładowność" >
+                            <f:validateDoubleRange minimum="2" />
+                        </p:inputText>
+                        <label></label>
+                        <p:commandButton id="addTruckButton" value="Dodaj" actionListener="#{contentBean.addNewTruck}" style="margin-top: 25px; float: right"
+                                         update=":#{p:component('growlAddTruck')},:#{p:component('addTruckPanelGrid')},:#{p:component('rentTruckDataTable')}"/>
+                    </h:panelGrid> 
+                </h:form>  
+            </h:panelGrid>
+        </p:tab>                
+        <p:tab title="Zwróć samochód">
+            <h:panelGrid columns="3" cellpadding="10">
+                <p:graphicImage id="removeCars" value="#{resource['images:rentCar.png']}"  width="300" height="300"/>
+                <h:form id="removeCarRent">
+                    <p:growl id="growlremoveCarRent" sticky="false" showDetail="true" life="3000" />
+                    <p:dataTable id="removeRentCarDataTable" var="carRentRemove" value="#{contentBean.rentedCarList}" selectionMode="single" selection="#{contentBean.selectedCarToRemove}" rowKey="#{carRentRemove.id}">
+                        <f:facet name="header">
+                            Lista wypożyczonych samochodów osobowych
+                        </f:facet>
+                        <p:ajax event="rowSelect" listener="#{contentBean.onRowSelect}" update=":#{p:component('growlremoveCarRent')}" />
+                        <p:column headerText="Id">
+                            <h:outputText value="#{carRentRemove.id}" />
+                        </p:column>
+                        <p:column headerText="Nazwa">
+                            <h:outputText value="#{carRentRemove.name}" />
+                        </p:column>
+                        <p:column headerText="Numer Rejestracyjny">
+                            <h:outputText value="#{carRentRemove.nameplates}" />
+                        </p:column>
+                        <p:column headerText="Ilość miejsc">
+                            <h:outputText value="#{carRentRemove.spots}" />
+                        </p:column>
+                        <f:facet name="footer">
+                            <p:commandButton process="removeRentCarDataTable" update=":#{p:component('removeRentCarDataTable')},:#{p:component('rentCarDataTable')}"  value="Zwróć" actionListener="#{contentBean.removeCar}"/>
+                        </f:facet>
+                    </p:dataTable>
+                </h:form>
+                <h:form id="removeTruckRent">
+                    <p:growl id="growlremoveTruckRent" sticky="false" showDetail="true" life="3000" />
+                    <p:dataTable id="removeRentTruckDataTable" var="truckRentRemove" value="#{contentBean.rentedTruckList}" selectionMode="single" selection="#{contentBean.selectedTruckToRemove}" rowKey="#{truckRentRemove.id}">
+                        <f:facet name="header">
+                            Lista wypożyczonych samochodów ciężarowych
+                        </f:facet>
+                        <p:ajax event="rowSelect" listener="#{contentBean.onRowSelectTruck}" update=":#{p:component('growlremoveTruckRent')}" />
+                        <p:column headerText="Id">
+                            <h:outputText value="#{truckRentRemove.id}" />
+                        </p:column>
+                        <p:column headerText="Nazwa">
+                            <h:outputText value="#{truckRentRemove.name}" />
+                        </p:column>
+                        <p:column headerText="Numer Rejestracyjny">
+                            <h:outputText value="#{truckRentRemove.nameplates}" />
+                        </p:column>
+                        <p:column headerText="Ładowność">
+                            <h:outputText value="#{truckRentRemove.copacity}" />
+                        </p:column>
+                        <f:facet name="footer">
+                            <p:commandButton process="removeRentTruckDataTable" update=":#{p:component('removeRentTruckDataTable')},:#{p:component('rentTruckDataTable')}"  value="Zwróć"  actionListener="#{contentBean.removeTruck()}"/>
+                        </f:facet>
+                    </p:dataTable>
+                </h:form>
+            </h:panelGrid>
+        </p:tab>
+    </p:tabView>
+</ui:composition>

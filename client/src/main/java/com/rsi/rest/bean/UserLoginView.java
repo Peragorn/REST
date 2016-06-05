@@ -177,8 +177,7 @@ public class UserLoginView {
 
         context.addCallbackParam("loggedIn", loggedIn);
 
-        FacesContext.getCurrentInstance().getExternalContext()
-            .redirect("/CarRentalClient/faces/main.xhtml");
+        FacesContext.getCurrentInstance().getExternalContext().redirect("/client/rent/main.xhtml");
         message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Witaj",
             user.getName() + " " + user.getLastname());
       } catch (IOException ex) {
