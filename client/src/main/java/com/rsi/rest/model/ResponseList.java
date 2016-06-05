@@ -17,6 +17,15 @@ public class ResponseList {
 
   private List<Rent> rentList;
 
+  private User user;
+
+  private Car car;
+
+  private Truck truck;
+
+  private Rent rent;
+
+
   public List<Object> getList() {
     return list;
   }
@@ -55,6 +64,38 @@ public class ResponseList {
 
   public void setRentList(List<Rent> rentList) {
     this.rentList = rentList;
+  }
+
+  public User getUser() {
+    return user;
+  }
+
+  public void setUser(User user) {
+    this.user = user;
+  }
+
+  public Car getCar() {
+    return car;
+  }
+
+  public void setCar(Car car) {
+    this.car = car;
+  }
+
+  public Truck getTruck() {
+    return truck;
+  }
+
+  public void setTruck(Truck truck) {
+    this.truck = truck;
+  }
+
+  public Rent getRent() {
+    return rent;
+  }
+
+  public void setRent(Rent rent) {
+    this.rent = rent;
   }
 
 }

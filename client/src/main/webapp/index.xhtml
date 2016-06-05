@@ -9,16 +9,70 @@
 </h:head>
 <h:body>
 
-	<h:form id="loginForm" >
+
+	<h:form id="loginForm">
 		<h:outputLink value="javascript:void(0)"
 			onclick="PF('loginDialog').show();" title="Zaloguj się">
-			<p:graphicImage value="#{resource['images:login-icon.png']}" width="40" height="40" />
-			
+			<p:graphicImage value="#{resource['images:login-icon.png']}"
+				width="40" height="40" />
 		</h:outputLink>
 		<p:growl id="growl" sticky="false" showDetail="true" life="3000" />
-       <p:commandButton id="reg" value="Zarejestruj" update="growl" actionListener="#{userLoginView.getFreeTruckk}" />  
+
+		<p:dialog header="Logowanie" widgetVar="loginDialog" resizable="false">
+			<h:panelGrid columns="2" cellpadding="5">
+				<h:outputLabel for="username" value="Login:" />
+				<p:inputText id="username" value="#{userLoginView.username}"
+					required="true" label="username" requiredMessage="Wpraowadź login" />
+
+				<h:outputLabel for="password" value="Hasło:" />
+				<p:password id="password" value="#{userLoginView.password}"
+					required="true" label="password" requiredMessage="Wprowadź hasło" />
+
+				<f:facet name="footer">
+					<p:commandButton id="log" value="Zaloguj" update="growl"
+						actionListener="#{userLoginView.login}"
+						oncomplete="handleLoginRequest(xhr, status, args)" />
+				</f:facet>
+			</h:panelGrid>
+		</p:dialog>
 	</h:form>
 
+	<h:form id="registerForm">
+		<h:outputLink value="javascript:void(0)"
+			onclick="PF('registerDialog').show();" title="Zarejestruj się">
+			<p:graphicImage value="#{resource['images:register.png']}" width="80" height="40" />
+		</h:outputLink>
+		<p:growl id="growlReg" showDetail="true" sticky="false" />
+
+		<p:dialog header="Rejestracja" widgetVar="registerDialog"
+			resizable="false">
+			<h:panelGrid columns="2" cellpadding="5">
+				<h:outputLabel for="usernameReg" value="Login:" />
+				<p:inputText id="usernameReg" value="#{userLoginView.username}"
+					required="true" label="usernameReg"
+					requiredMessage="Wypełnij pole Login" />
+
+				<h:outputLabel for="passwordReg" value="Hasło:" />
+				<p:password id="passwordReg" value="#{userLoginView.password}"
+					required="true" label="passwordReg"
+					requiredMessage="Wypełnij pole Hasło" />
+
+				<h:outputLabel for="name" value="Imię:" />
+				<p:inputText id="name" value="#{userLoginView.name}" required="true"
+					label="name" requiredMessage="Wypełnij pole Imię" />
+
+				<h:outputLabel for="surname" value="Nazwisko:" />
+				<p:inputText id="surname" value="#{userLoginView.surname}"
+					required="true" label="surname"
+					requiredMessage="Wypełnij pole Nazwisko" />
+
+				<p:commandButton id="reg" value="Zarejestruj" update="growlReg"
+					actionListener="#{userLoginView.register}"
+					oncomplete="handleRegisterRequest(xhr, status, args)" />
+
+			</h:panelGrid>
+		</p:dialog>
+	</h:form>
 
 	<script type="text/javascript">
             function handleLoginRequest(xhr, status, args) {
