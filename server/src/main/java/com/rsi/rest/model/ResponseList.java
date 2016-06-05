@@ -6,7 +6,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 
 @XmlRootElement(name = "responseList")
-public class ResposeList {
+public class ResponseList {
 
   private List<Object> list;
 

@@ -20,7 +20,7 @@ import com.rsi.rest.business.TruckBusiness;
 import com.rsi.rest.business.UserBusiness;
 import com.rsi.rest.model.Car;
 import com.rsi.rest.model.Rent;
-import com.rsi.rest.model.ResposeList;
+import com.rsi.rest.model.ResponseList;
 import com.rsi.rest.model.Truck;
 import com.rsi.rest.model.User;
 
@@ -38,12 +38,12 @@ public class RentWS {
   @Path("/freeCar")
   @GET
   @Produces(MediaType.APPLICATION_XML)
-  public ResposeList getFreeCar() {
+  public ResponseList getFreeCar() {
     List<Car> carList = new ArrayList<Car>();
     CarBusiness cb = new CarBusiness();
     carList = cb.getFreeCar();
 
-    ResposeList freeCarList = new ResposeList();
+    ResponseList freeCarList = new ResponseList();
     freeCarList.setCarList(carList);
 
     return freeCarList;
@@ -80,12 +80,12 @@ public class RentWS {
   @GET
   @Path("/isPasswordCorrect/{login}/{password}")
   @Produces(MediaType.APPLICATION_XML)
-  public ResposeList isPasswordCorect(@PathParam("login") String login,
+  public ResponseList isPasswordCorect(@PathParam("login") String login,
       @PathParam("password") String password) {
     UserBusiness user = new UserBusiness();
     User u = new User();
 
-    ResposeList userList = new ResposeList();
+    ResponseList userList = new ResponseList();
 
     u = user.getUserByLogin(login);
     if (u.getPassword().equals(password)) {
@@ -100,7 +100,7 @@ public class RentWS {
   @POST
   @Produces(MediaType.TEXT_XML)
   @Path("/addUser")
-  public Response addUser(ResposeList user) {
+  public Response addUser(ResponseList user) {
     UserBusiness userBusiness = new UserBusiness();
     userBusiness.addUser(user.getUser());
     return Response.status(200).entity("OK").build();
@@ -109,7 +109,7 @@ public class RentWS {
   @POST
   @Produces(MediaType.TEXT_XML)
   @Path("/addCar")
-  public Response addCar(ResposeList car) {
+  public Response addCar(ResponseList car) {
     CarBusiness carBusiness = new CarBusiness();
     carBusiness.addCar(car.getCar());
     return Response.status(200).entity("OK").build();
@@ -118,7 +118,7 @@ public class RentWS {
   @POST
   @Produces(MediaType.TEXT_XML)
   @Path("/addTruck")
-  public Response addTruck(ResposeList truck) {
+  public Response addTruck(ResponseList truck) {
     TruckBusiness truckBusiness = new TruckBusiness();
     truckBusiness.addTruck(truck.getTruck());
     return Response.status(200).entity("OK").build();
@@ -127,7 +127,7 @@ public class RentWS {
   @POST
   @Produces(MediaType.TEXT_XML)
   @Path("/addRent")
-  public Response addRent(ResposeList rent) {
+  public Response addRent(ResponseList rent) {
     RentBusiness rentBusiness = new RentBusiness();
     rentBusiness.addRent(rent.getRent());
     return Response.status(200).entity("OK").build();
@@ -136,7 +136,7 @@ public class RentWS {
   @POST
   @Produces(MediaType.TEXT_XML)
   @Path("/removeRent")
-  public Response removeRent(ResposeList rent) {
+  public Response removeRent(ResponseList rent) {
     RentBusiness rb = new RentBusiness();
     rb.removeUserRent(rent.getRent());
     return Response.status(200).entity("OK").build();
@@ -145,12 +145,12 @@ public class RentWS {
   @Path("/findRentByData")
   @POST
   @Produces(MediaType.APPLICATION_XML)
-  public ResposeList findRentByData(ResposeList rent) {
+  public ResponseList findRentByData(ResponseList rent) {
     RentBusiness rb = new RentBusiness();
     Rent rentID = new Rent();
     rentID = rb.findRentByData(rent.getRent());
 
-    ResposeList findRent = new ResposeList();
+    ResponseList findRent = new ResponseList();
     findRent.setRent(rentID);
 
     return findRent;
@@ -159,12 +159,12 @@ public class RentWS {
   @Path("/getCarRentByMe")
   @POST
   @Produces(MediaType.APPLICATION_XML)
-  public ResposeList getCarRentByMe(ResposeList user) {
+  public ResponseList getCarRentByMe(ResponseList user) {
     List<Rent> rentCarByMeList = new ArrayList<Rent>();
     RentBusiness rentBusiness = new RentBusiness();
     rentCarByMeList = rentBusiness.getRentedCarByUser(user.getUser());
 
-    ResposeList rentByMe = new ResposeList();
+    ResponseList rentByMe = new ResponseList();
     rentByMe.setRentList(rentCarByMeList);
 
     return rentByMe;
@@ -173,12 +173,12 @@ public class RentWS {
   @Path("/getRentedTruckByUser")
   @POST
   @Produces(MediaType.APPLICATION_XML)
-  public ResposeList getRentedTruckByUser(ResposeList user) {
+  public ResponseList getRentedTruckByUser(ResponseList user) {
     List<Truck> rentedTruckList = new ArrayList<Truck>();
     TruckBusiness tb = new TruckBusiness();
     rentedTruckList = tb.getTruckRentByUser(user.getUser());
 
-    ResposeList rentByMe = new ResposeList();
+    ResponseList rentByMe = new ResponseList();
     rentByMe.setTruckList(rentedTruckList);
 
     return rentByMe;
@@ -187,14 +187,18 @@ public class RentWS {
   @Path("/getRentedCarByUser")
   @POST
   @Produces(MediaType.APPLICATION_XML)
-  public ResposeList getRentedCarByUser(ResposeList user) {
+  public ResponseList getRentedCarByUser(ResponseList user) {
     List<Car> rentedCarList = new ArrayList<Car>();
     CarBusiness cb = new CarBusiness();
     rentedCarList = cb.getCarRentByUser(user.getUser());
 
-    ResposeList rentByMe = new ResposeList();
+    ResponseList rentByMe = new ResponseList();
     rentByMe.setCarList(rentedCarList);
 
     return rentByMe;
   }
+
+  // TODO: metoda do generowania PDF
+
+  // TODO: metoda do edycji profilu uzytkownika
 }
