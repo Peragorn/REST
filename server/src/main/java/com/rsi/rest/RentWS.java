@@ -19,6 +19,7 @@ import com.rsi.rest.business.RentBusiness;
 import com.rsi.rest.business.TruckBusiness;
 import com.rsi.rest.business.UserBusiness;
 import com.rsi.rest.model.Car;
+import com.rsi.rest.model.Rent;
 import com.rsi.rest.model.ResposeList;
 import com.rsi.rest.model.Truck;
 import com.rsi.rest.model.User;
@@ -65,7 +66,7 @@ public class RentWS {
   @Path("/freeTruck")
   @GET
   @Produces(MediaType.APPLICATION_JSON)
-  public Response getFreeTruckk() {
+  public Response getFreeTruck() {
     List<Truck> truckList = new ArrayList<Truck>();
     TruckBusiness tb = new TruckBusiness();
     truckList = tb.getFreeTrack();
@@ -132,4 +133,68 @@ public class RentWS {
     return Response.status(200).entity("OK").build();
   }
 
+  @POST
+  @Produces(MediaType.TEXT_XML)
+  @Path("/removeRent")
+  public Response removeRent(ResposeList rent) {
+    RentBusiness rb = new RentBusiness();
+    rb.removeUserRent(rent.getRent());
+    return Response.status(200).entity("OK").build();
+  }
+
+  @Path("/findRentByData")
+  @POST
+  @Produces(MediaType.APPLICATION_XML)
+  public ResposeList findRentByData(ResposeList rent) {
+    RentBusiness rb = new RentBusiness();
+    Rent rentID = new Rent();
+    rentID = rb.findRentByData(rent.getRent());
+
+    ResposeList findRent = new ResposeList();
+    findRent.setRent(rentID);
+
+    return findRent;
+  }
+
+  @Path("/getCarRentByMe")
+  @POST
+  @Produces(MediaType.APPLICATION_XML)
+  public ResposeList getCarRentByMe(ResposeList user) {
+    List<Rent> rentCarByMeList = new ArrayList<Rent>();
+    RentBusiness rentBusiness = new RentBusiness();
+    rentCarByMeList = rentBusiness.getRentedCarByUser(user.getUser());
+
+    ResposeList rentByMe = new ResposeList();
+    rentByMe.setRentList(rentCarByMeList);
+
+    return rentByMe;
+  }
+
+  @Path("/getRentedTruckByUser")
+  @POST
+  @Produces(MediaType.APPLICATION_XML)
+  public ResposeList getRentedTruckByUser(ResposeList user) {
+    List<Truck> rentedTruckList = new ArrayList<Truck>();
+    TruckBusiness tb = new TruckBusiness();
+    rentedTruckList = tb.getTruckRentByUser(user.getUser());
+
+    ResposeList rentByMe = new ResposeList();
+    rentByMe.setTruckList(rentedTruckList);
+
+    return rentByMe;
+  }
+
+  @Path("/getRentedCarByUser")
+  @POST
+  @Produces(MediaType.APPLICATION_XML)
+  public ResposeList getRentedCarByUser(ResposeList user) {
+    List<Car> rentedCarList = new ArrayList<Car>();
+    CarBusiness cb = new CarBusiness();
+    rentedCarList = cb.getCarRentByUser(user.getUser());
+
+    ResposeList rentByMe = new ResposeList();
+    rentByMe.setCarList(rentedCarList);
+
+    return rentByMe;
+  }
 }

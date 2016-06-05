@@ -23,5 +23,10 @@
 	<h3>6. /rest/addCar dodaje samochod osobowy (POST)</h3>
 	<h3>7. /rest/addTruck dodaje samochod ciezarowy (POST)</h3>
 	<h3>8. /rest/addRent dodaje wypozyczenie(POST)</h3>
+	<h3>9. /rest/removeRent usuwa wypozyczenie</h3>
+	<h3>10. /rest/findRentByData zwraca wypozyczenie</h3>
+	<h3>11. /rest/getCarRentByMe zwraca wszystkie  wypozyczenia przez zalogowanego uzytkownika </h3>
+	<h3>12 /rest/getRentedTruckByUser zwraca wypozyczone przez zalogowanego uzytkownika samochody ciezarowe</h3>
+	<h3>13. /rest/getRentedCarByUser zwraca wypozyczone przez zalogowanego uzytkownika samochody osobowe</h3>
 </body>
 </html>
