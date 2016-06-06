@@ -30,7 +30,7 @@ public class UserBusiness {
     Transaction tx = session.beginTransaction();
 
     User user = new User();
-    user = (User) session.get(User.class, id);
+    user = session.get(User.class, id);
 
     session.close();
     return user;
@@ -71,5 +71,13 @@ public class UserBusiness {
     userRentsList = getUserById(id).getRents();
 
     return userRentsList;
+  }
+
+  public void updateUser(User user) {
+    Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+    Transaction tx = session.beginTransaction();
+
+    session.update(user);
+    tx.commit();
   }
 }

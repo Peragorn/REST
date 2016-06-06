@@ -28,5 +28,7 @@
 	<h3>11. /rest/getCarRentByMe zwraca wszystkie  wypozyczenia przez zalogowanego uzytkownika </h3>
 	<h3>12 /rest/getRentedTruckByUser zwraca wypozyczone przez zalogowanego uzytkownika samochody ciezarowe</h3>
 	<h3>13. /rest/getRentedCarByUser zwraca wypozyczone przez zalogowanego uzytkownika samochody osobowe</h3>
+	<h3>14. /rest/editUserProfile edycja uzytkownika</h3>
+	<h3>15. /rest/generatePdf generuje PDF</h3>
 </body>
 </html>

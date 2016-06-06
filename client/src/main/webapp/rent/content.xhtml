@@ -152,6 +152,56 @@
                     </p:dataTable>
                 </h:form>
             </h:panelGrid>
-        </p:tab>
-    </p:tabView>
+	        </p:tab>
+		<p:tab title="Edytuj profil użytkownika">
+			<h:panelGrid columns="2" cellpadding="10">
+				<p:graphicImage id="editUserProfile"
+					value="#{resource['images:login-icon.png']}" width="300"
+					height="300" />
+				<h:form id="editUserProfileForm">
+					<p:growl id="growleditUserProfile" sticky="false" showDetail="true"
+						life="3000" />
+					<h:panelGrid columns="2" cellpadding="0"
+						id="editUserProfilePanelGrid">
+						<h:outputLabel for="userLogin" value="Login:" />
+						<p:inputText id="userLogin"
+							value="#{contentBean.userLoginView.userLoged.login}"
+							required="true" label="userLogin"
+							requiredMessage="Wpraowadź login" />
+						<h:outputLabel for="userPassword" value="Hasło" />
+						<p:inputText id="userPassword"
+							value="#{contentBean.userLoginView.userLoged.password}"
+							required="true" label="userPassword"
+							requiredMessage="Wpraowadź hasło" />
+						<h:outputLabel for="userName" value="Imię:" />
+						<p:inputText id="userName"
+							value="#{contentBean.userLoginView.userLoged.name}"
+							required="true" label="userName" requiredMessage="Wpraowadź imię" />
+						<h:outputLabel for="userSurname" value="Nazwisko:" />
+						<p:inputText id="userSurname"
+							value="#{contentBean.userLoginView.userLoged.lastname}"
+							required="true" label="userSurname"
+							requiredMessage="Wpraowadź nazwisko" />
+						<label></label>
+						<p:commandButton id="editUserProfileButton" value="Edytuj"
+							actionListener="#{contentBean.editUserProfile}"
+							style="margin-top: 25px; float: right"
+							update=":#{p:component('growleditUserProfile')},:#{p:component('editUserProfilePanelGrid')},:#{p:component('rentTruckDataTable')}" />
+					</h:panelGrid>
+				</h:form>
+			</h:panelGrid>
+		</p:tab>
+		<p:tab title="PDF">
+			<h:panelGrid columns="2" cellpadding="10">
+				<h:form id="pdfForm">
+									<p:growl id="pdfCreator" sticky="false" showDetail="true"
+						life="3000" />
+						<p:commandButton id="generatePdf" value="generuj PDF"
+							actionListener="#{contentBean.generatePdf}"
+							style="margin-top: 25px; float: right" 
+							update=":#{p:component('pdfCreator')}" />
+				</h:form>
+			</h:panelGrid>
+		</p:tab>
+	</p:tabView>
 </ui:composition>

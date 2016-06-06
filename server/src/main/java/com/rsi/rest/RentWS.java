@@ -198,7 +198,48 @@ public class RentWS {
     return rentByMe;
   }
 
-  // TODO: metoda do generowania PDF
+  @Path("/editUserProfile")
+  @POST
+  @Produces(MediaType.APPLICATION_XML)
+  public Response editUserProfile(ResponseList user) {
+    UserBusiness userBusiness = new UserBusiness();
+    userBusiness.updateUser(user.getUser());
+    return Response.status(200).entity("OK").build();
+  }
 
-  // TODO: metoda do edycji profilu uzytkownika
+  @Path("/generatePdf")
+  @POST
+  @Produces(MediaType.TEXT_HTML)
+  public String generatePdf(ResponseList user) {
+
+    List<Car> rentedCarList = new ArrayList<Car>();
+    CarBusiness cb = new CarBusiness();
+    rentedCarList = cb.getCarRentByUser(user.getUser());
+
+    List<Truck> rentedTruckList = new ArrayList<Truck>();
+    TruckBusiness tb = new TruckBusiness();
+    rentedTruckList = tb.getTruckRentByUser(user.getUser());
+
+    String output;
+
+    StringBuilder strB = new StringBuilder();
+
+    strB.append("Samochody wypożyczone\n");
+    if (rentedCarList.size() > 0) {
+      strB.append("Do zwrotu masz nastepujące samochody osobowe: \n");
+    }
+    for (Car car : rentedCarList) {
+      strB.append(car.getId() + " " + car.getName() + " " + car.getNameplates() + "\n");
+    }
+    if (rentedTruckList.size() > 0) {
+      strB.append("Do zwrotu masz nastepujace samochody ciezarowe: \n");
+    }
+    for (Truck truck : rentedTruckList) {
+      strB.append(truck.getId() + " " + truck.getName() + " " + truck.getNameplates() + "\n");
+    }
+
+    output = strB.toString();
+    return output;
+  }
+
 }
