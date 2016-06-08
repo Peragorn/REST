@@ -1,0 +1,50 @@
+SSL auth
+
+0.	https://slproweb.com/products/Win32OpenSSL.html
+ 
+1.	pobierz Win64 OpenSSL v1.0.2h Light
+2.	zainstaluj na domyslnym
+3.
+	cd C:
+	cd openssl
+	cd bin
+4.	set OPENSSL_CONF=c:\OpenSSL-Win64\bin\openssl.cfg  
+5.	openssl genrsa -out server.key 1024
+6.	set OPENSSL_CONF=c:\OpenSSL-Win32\bin\openssl.cfg  
+7.	tworzenie certyfikatu
+		a.	openssl req -new -key server.key -out server.csr
+			CN
+			Podlaskie
+			Bialystok
+			Rsi
+			RestServer
+			damian16172@gmail.com
+			admin
+			rsi
+8.	openssl x509 -req -days 365 -in server.csr -signkey server.key -out server.crt
+
+
+9.	web.xml server
+		<security-constraint>
+		<web-resource-collection>
+			<web-resource-name>BASIC</web-resource-name>
+			<url-pattern>/*</url-pattern>
+			<http-method>GET</http-method>
+			<http-method>POST</http-method>
+		</web-resource-collection>
+
+		<auth-constraint>
+			<role-name>member</role-name>
+		</auth-constraint>
+		<user-data-constraint>
+			<transport-guarantee>CONFIDENTIAL</transport-guarantee>
+		</user-data-constraint>
+	</security-constraint>
+	
+10.	server.xml
+	<Connector SSLCertificateFile="C:\\OpenSSL-Win64\\bin\\server.crt" SSLCertificateKeyFil="C:\\OpenSSL-Win64\\bin\\server.key"
+	SSLEnabled="true" clientAuth="false" maxThreads="150" port="8443" protocol="HTTP/1.1" scheme="https" secure="true"
+	sslProtocol="TLS"/>
+	
+11.	"%JAVA_HOME%\bin\keytool" -genkey -alias tomcat -keyalg RSA
+	haslo changeit

@@ -29,6 +29,7 @@ import com.rsi.rest.model.Truck;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
+import com.sun.jersey.api.client.filter.HTTPBasicAuthFilter;
 
 @ManagedBean
 public class ContentBean {
@@ -59,6 +60,10 @@ public class ContentBean {
   private UserLoginView userLoginView;
 
   private Rent rentByUser;
+
+  private static String LOGIN = "admin";
+
+  private static String PASSWORD = "admin";
 
   public String getName() {
     return name;
@@ -175,6 +180,7 @@ public class ContentBean {
   private ResponseList loadData(String urlString) {
     try {
       Client client = Client.create();
+      client.addFilter(new HTTPBasicAuthFilter(LOGIN, PASSWORD));
       WebResource webResource2 = client.resource(urlString);
       ClientResponse response2 =
           webResource2.accept(MediaType.APPLICATION_XML).get(ClientResponse.class);
@@ -198,6 +204,7 @@ public class ContentBean {
 
   private ResponseList loadDataPostWithResponse(String urlString) {
     Client client = Client.create();
+    client.addFilter(new HTTPBasicAuthFilter(LOGIN, PASSWORD));
     WebResource wr = client.resource(urlString);
     ResponseList resp = new ResponseList();
     resp.setUser(userLoginView.getUserLoged());
@@ -206,12 +213,14 @@ public class ContentBean {
 
   private ResponseList loadDataPostWithResponse(String urlString, ResponseList response) {
     Client client = Client.create();
+    client.addFilter(new HTTPBasicAuthFilter(LOGIN, PASSWORD));
     WebResource wr = client.resource(urlString);
     return wr.accept(MediaType.APPLICATION_XML).post(ResponseList.class, response);
   }
 
   private void addDataPost(String urlString, ResponseList response) {
     Client client = Client.create();
+    client.addFilter(new HTTPBasicAuthFilter(LOGIN, PASSWORD));
     WebResource wr = client.resource(urlString);
     wr.accept(MediaType.TEXT_XML).post(response);
   }
@@ -285,6 +294,7 @@ public class ContentBean {
     try {
 
       Client client = Client.create();
+      client.addFilter(new HTTPBasicAuthFilter(LOGIN, PASSWORD));
       WebResource webResource2 = client.resource("http://localhost:8080/server/rest/freeTruck");
       ClientResponse response2 =
           webResource2.accept(MediaType.APPLICATION_JSON).get(ClientResponse.class);
@@ -395,6 +405,7 @@ public class ContentBean {
     resp.setUser(getUserLoginView().getUserLoged());
 
     Client client = Client.create();
+    client.addFilter(new HTTPBasicAuthFilter(LOGIN, PASSWORD));
     WebResource wr = client.resource("http://localhost:8080/server/rest/editUserProfile");
     wr.accept(MediaType.APPLICATION_XML).post(resp);
 
@@ -405,6 +416,7 @@ public class ContentBean {
   public void generatePdf() {
     FacesMessage message = null;
     Client client = Client.create();
+    client.addFilter(new HTTPBasicAuthFilter(LOGIN, PASSWORD));
     WebResource wr = client.resource("http://localhost:8080/server/rest/generatePdf");
 
     String str;

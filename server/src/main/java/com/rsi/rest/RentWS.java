@@ -4,13 +4,16 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.SecurityContext;
 
 import org.json.JSONArray;
 
@@ -29,10 +32,15 @@ public class RentWS {
 
   @GET
   @Produces(MediaType.TEXT_HTML)
-  public Response getStartingPage() {
-    String output = "<h1>Hello World!<h1>" + "<p>RESTful Service is running ... <br>Ping @ "
-        + new Date().toString() + "</p<br>";
-    return Response.status(200).entity(output).build();
+  @RolesAllowed("manager")
+  public Response getStartingPage(@Context SecurityContext sc) {
+    if (sc.isUserInRole("admin")) {
+      return Response.status(200).entity("asdadassd").build();
+    } else {
+      String output = "<h1>Hello World!<h1>" + "<p>RESTful Service is running ... <br>Ping @ "
+          + new Date().toString() + "</p<br>";
+      return Response.status(200).entity(output).build();
+    }
   }
 
   @Path("/freeCar")

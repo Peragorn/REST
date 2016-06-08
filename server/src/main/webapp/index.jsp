@@ -12,7 +12,7 @@
 		2. /rest/freeCar zwraca wolne samochody osobowe <a href="rest/freeCar">link</a>
 	</h3>
 	<h3>
-		3. /rest/freeCar zwraca wolne samochody ciezarowe <a
+		3. /rest/freeTruck zwraca wolne samochody ciezarowe <a
 			href="rest/freeTruck">link</a>
 	</h3>
 	<h3>

@@ -26,12 +26,28 @@
 		<welcome-file>default.jsp</welcome-file>
 	</welcome-file-list> 
 	
+		<!-- security przez SSL -->
+<!-- 	<security-constraint>
+		<web-resource-collection>
+			<web-resource-name>BASIC</web-resource-name>
+			<url-pattern>/*</url-pattern>
+			<http-method>GET</http-method>
+			<http-method>POST</http-method>
+		</web-resource-collection>
+
+		<auth-constraint>
+			<role-name>member</role-name>
+		</auth-constraint>
+		<user-data-constraint>
+			<transport-guarantee>CONFIDENTIAL</transport-guarantee>
+		</user-data-constraint>
+	</security-constraint> -->
 	
 <!--    autoryzacja nieprogramistyczna-->
 <!-- 	  <role rolename="operator"/>
   <user username="admin" password="admin" roles="operator"/> -->
   
-<!-- 	<security-role>
+	<security-role>
 		<description>Normal operator user</description>
 		<role-name>operator</role-name>
 	</security-role>
@@ -51,6 +67,6 @@
 
 	<login-config>
 		<auth-method>BASIC</auth-method>
-	</login-config> -->
+	</login-config>
 	
 </web-app>

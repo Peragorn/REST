@@ -20,6 +20,7 @@ import com.rsi.rest.model.User;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
+import com.sun.jersey.api.client.filter.HTTPBasicAuthFilter;
 
 
 @ManagedBean(eager = true)
@@ -36,6 +37,10 @@ public class UserLoginView {
   public boolean authentication = true;
 
   private static User userLoged = null;
+
+  private static String LOGIN = "admin";
+
+  private static String PASSWORD = "admin";
 
   public String getUsername() {
     return username;
@@ -79,6 +84,8 @@ public class UserLoginView {
 
   // @PostConstruct
   // public void initialize() {
+  // Authorization auth = new Authorization();
+  // auth.basicAccessAuthentication();
   // }
 
 
@@ -129,9 +136,9 @@ public class UserLoginView {
 
   private User convertToUser(String username, String password) {
     User user = new User();
-
     try {
       Client client = Client.create();
+      client.addFilter(new HTTPBasicAuthFilter(LOGIN, PASSWORD));
       WebResource webResource2 = client.resource(
           "http://localhost:8080/server/rest/isPasswordCorrect/" + username + "/" + password);
       ClientResponse response2 =
@@ -158,6 +165,9 @@ public class UserLoginView {
   public void register(ActionEvent event) {
 
     Client client = Client.create();
+    // security
+    client.addFilter(new HTTPBasicAuthFilter("admin", "admin"));
+
     WebResource wr = client.resource("http://localhost:8080/server/rest/addUser");
 
     RequestContext context = RequestContext.getCurrentInstance();
